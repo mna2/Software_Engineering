@@ -1,4 +1,3 @@
-# Tetris-js
-Practicing tetris game with some changes (from @kubowania)
+# Tetriz
 
-- Site para visualização — https://wilsonwagner.github.io/Tetris-js/
+A Tetris clone.
