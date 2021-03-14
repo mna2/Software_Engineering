@@ -1,3 +1,0 @@
-# Tetriz
-
-A Tetris clone.
