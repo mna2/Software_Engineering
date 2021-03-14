@@ -120,11 +120,7 @@ document.addEventListener("DOMContentLoaded",() => {
         freeze()
     }
 
-    //freeze function
-    function freeze(){
-        if(current.some(index => squares[currentPosition + index + width].classList.contains("taken"))) {
-        current.forEach(index => squares[currentPosition + index ].classList.add('taken'))
-        //start a new tetromino falling
+    function tetrominoGenerator() {
         random = nextRandom
         nextRandom = Math.floor(Math.random() * theTetrominoes.length)
         current = theTetrominoes[random][currentRotation]
@@ -133,7 +129,14 @@ document.addEventListener("DOMContentLoaded",() => {
         displayShape()
         addScore()
         gameOver()
-        
+    }
+
+    //freeze function
+    function freeze(){
+        if(current.some(index => squares[currentPosition + index + width].classList.contains("taken"))) {
+        current.forEach(index => squares[currentPosition + index ].classList.add('taken'))
+        //start a new tetromino falling
+        tetrominoGenerator()
         }
     }
 
@@ -212,9 +215,8 @@ document.addEventListener("DOMContentLoaded",() => {
             
         })
     }
-    
-    // add functionality to the button
-    startBtn.addEventListener("click", () => {
+
+    function playAndPause() {
         tocarMusica()
         if (timerId) {
             clearInterval(timerId)
@@ -224,8 +226,38 @@ document.addEventListener("DOMContentLoaded",() => {
             draw()
             timerId = setInterval(moveDown, 500)
             displayShape()
-        } 
+        }
+    }
+    
+    // add functionality to the button
+    startBtn.addEventListener("click", () => {
+        playAndPause()
     })
+
+    function erase(element) {
+        element.style.backgroundColor = ''
+        element.style.borderStyle = 'none'
+        element.borderWidth = ''
+        element.width = '20px'
+        element.height = '20px'
+    }
+
+    function restartGame() {
+        playAndPause()
+        squares.forEach((square, i) => {
+            square.classList.remove('tetromino');
+            squares[i].style.backgroundColor = ''
+            squares[i].style.borderStyle = 'none'
+            squares[i].style.borderWidth = ''
+            squares[i].style.width = '20px'
+            squares[i].style.height = '20px'
+            if (i < squares.length - width) {
+                square.classList.remove('taken');
+            }
+        })
+        tetrominoGenerator()
+        timerId = setInterval(moveDown, 500)
+    }
 
 
     // add score
@@ -281,7 +313,9 @@ document.addEventListener("DOMContentLoaded",() => {
     })
 
     buttonLeft.addEventListener("click", () => {
-    if (timerId) moveLeft();
+    if (timerId) {
+        moveLeft();
+    }
     })
 
     buttonRight.addEventListener("click", () => {
