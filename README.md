@@ -1,3 +1,3 @@
 # Tetriz
 
-A Tetris clone.
+Link for the site: https://mauriciofgf.github.io/Tetris-js/
